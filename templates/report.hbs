@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+  <title>Financial Report</title>
+  <script src="../../node_modules/chart.js/dist/Chart.js"></script>
+  <script src="../../node_modules/handlebars/dist/handlebars.js"></script>
+</head>
+<body>
+  <div>
+    <h1>Financial Report</h1>
+    <h3>From {{reportStartDate}} to {{reportEndDate}}</h3>
+  </div>
+  <div id="tepc-canvas-holder" style="width:40%">
+    <canvas id="tepc-chart-area" />
+  </div>
+
+  <scr{{!}}ipt id="myscript">
+  Chart.defaults.global.defaultFontSize = 14;
+  var tepcConfig = {
+    type: 'pie',
+    data: {
+      datasets: [{
+        data: {{tepc.categorySums}},
+        backgroundColor: [
+          'rgb(255, 99, 132)',
+          'rgb(255, 159, 64)',
+          'rgb(255, 205, 86)',
+          'rgb(75, 192, 192)',
+          'rgb(54, 162, 235)',
+          'rgb(51, 131, 255)'
+        ],
+        label: 'Total Expenses per Category'
+      }],
+      labels: {{tepc.categoryLabels}}
+    },
+    options: {
+      responsive: true
+    }
+  };
+
+  window.onload = function() {
+    var tepcCtx = document.getElementById("tepc-chart-area").getContext("2d");
+    window.tepcChart = new Chart(tepcCtx, tepcConfig);
+  };
+  </scr{{!}}ipt>
+</body>
+</html>
